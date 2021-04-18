@@ -1,0 +1,69 @@
+-- SELECT ACCOUNTS BY ROLES
+SELECT * 
+FROM ACCOUNT ac 
+JOIN ACCOUNT_HAS_ROLE ahc 
+ON ac.ID = ahc.account_id 
+AND ahc.role_id = ?;
+_____________________________________________________________________________
+-- SELECT ACCOUNT BY USERNAME
+SELECT a 
+FROM Account a 
+WHERE a.username = ?;
+_____________________________________________________________________________
+-- FIND ACCOUNT AND HIS ORDERS BY ACCOUNT ID 
+SELECT *
+FROM account a
+JOIN orders o
+ON a.id = o.Account_id
+WHERE a.id = ?;
+_____________________________________________________________________________
+-- SELECT Categories by SubCategory
+SELECT c 
+FROM Category c 
+WHERE c.catBId.id = ?;
+_____________________________________________________________________________
+-- SELECT ORDERDETAILS BY A SRECIFIC ORDER
+SELECT od.*, p.*, group_concat(cname)
+FROM order_details od
+JOIN product p
+ON od.product_id = p.id
+LEFT OUTER JOIN details_categories odc
+ON od.id = odc.order_details_id
+LEFT OUTER JOIN category cat
+ON odc.category_id = cat.id
+WHERE od.order_id= ?
+GROUP BY od.id;
+_____________________________________________________________________________
+-- SAVE INTO DETAILS_CATEGORIES SPECIFIC ORDER_DETAIL AND CATEGORY
+INSERT INTO details_categories (order_details_id, category_id) VALUES (?, ?);
+_____________________________________________________________________________
+-- SELECT ORDER BY ITS ADDRESS
+SELECT DISTINCT a.*, o.*
+FROM address a
+JOIN orders o
+ON a.id = o.Address_id
+WHERE o.Address_id = ?;
+_____________________________________________________________________________
+-- SELECT ORDERS BY ITS ACCOUNT
+SELECT *
+FROM orders o
+JOIN account a
+ON o.Account_id = a.id
+WHERE o.Account_id= ?
+ORDER BY o.odate DESC;
+_____________________________________________________________________________
+-- SELECT ORDERS BY ITS STATUS
+SELECT o 
+FROM Orders o 
+WHERE o.status = ?
+ORDER BY o.odate DESC;
+_____________________________________________________________________________
+-- SELECT PRODUCTS BY ITS CATEGORY
+SELECT p 
+FROM Product p 
+WHERE p.catAId.id = ?;
+_____________________________________________________________________________
+-- SELECT ROLE BY ITS NAME
+SELECT r 
+FROM Role r 
+WHERE r.rname = ?;
